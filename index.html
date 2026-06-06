@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hope's Baptism Invitation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Dancing+Script:wght@400;600;700&family=Lato:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --pink-deep: #c2185b;
+      --pink-mid: #e91e8c;
+      --pink-soft: #f8bbd0;
+      --pink-pale: #fce4ec;
+      --pink-blush: #fff0f5;
+      --gold: #d4a843;
+      --gold-light: #f5e6c0;
+      --white: #ffffff;
+      --text-dark: #4a1a2c;
+      --text-mid: #7b3355;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      background: linear-gradient(160deg, #fff0f5 0%, #fce4ec 30%, #f8bbd0 60%, #fff0f5 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+      color: var(--text-dark);
+    }
+
+    /* ── CANVAS BACKGROUND ─────────────────────── */
+    #bg-canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── LAYOUT ────────────────────────────────── */
+    .page { position: relative; z-index: 1; }
+
+    section {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 60px 24px;
+    }
+
+    /* ── HERO ──────────────────────────────────── */
+    .hero {
+      text-align: center;
+      padding: 80px 24px 60px;
+      position: relative;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.1rem;
+      color: var(--pink-deep);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      animation: fadeDown 1s ease both;
+    }
+
+    .hero-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(3rem, 10vw, 5.5rem);
+      color: var(--pink-deep);
+      line-height: 1.1;
+      text-shadow: 0 2px 20px rgba(194, 24, 91, 0.15);
+      animation: fadeDown 1s ease 0.2s both;
+    }
+
+    .hero-subtitle {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.1rem, 3vw, 1.5rem);
+      color: var(--text-mid);
+      font-style: italic;
+      margin-top: 10px;
+      animation: fadeDown 1s ease 0.4s both;
+    }
+
+    .cross-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin: 28px auto;
+      animation: fadeIn 1s ease 0.6s both;
+    }
+
+    .cross-divider::before,
+    .cross-divider::after {
+      content: '';
+      flex: 1;
+      max-width: 160px;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--pink-deep));
+    }
+
+    .cross-divider::after {
+      background: linear-gradient(to left, transparent, var(--pink-deep));
+    }
+
+    .cross-icon {
+      font-size: 1.6rem;
+      color: var(--pink-deep);
+    }
+
+    .hero-verse {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      color: var(--text-mid);
+      font-style: italic;
+      max-width: 520px;
+      margin: 0 auto;
+      line-height: 1.8;
+      animation: fadeIn 1s ease 0.8s both;
+    }
+
+    .hero-verse cite {
+      display: block;
+      font-size: 0.85em;
+      font-style: normal;
+      color: var(--pink-deep);
+      margin-top: 6px;
+      font-family: 'Lato', sans-serif;
+      letter-spacing: 1px;
+    }
+
+    /* ── PARENTS INVITATION ────────────────────── */
+    .parents-section { text-align: center; }
+
+    .parents-card {
+      background: rgba(255, 255, 255, 0.82);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(194, 24, 91, 0.18);
+      border-radius: 28px;
+      padding: 52px 40px;
+      margin-top: 24px;
+      box-shadow: 0 8px 48px rgba(194, 24, 91, 0.12);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .parents-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--pink-soft), var(--pink-deep), var(--pink-soft));
+    }
+
+    .parents-intro {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1rem, 2.5vw, 1.15rem);
+      color: var(--text-mid);
+      line-height: 1.9;
+      margin-bottom: 28px;
+    }
+
+    .parents-names {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin: 28px 0;
+    }
+
+    .parent-name {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(2rem, 6vw, 2.8rem);
+      color: var(--pink-deep);
+      line-height: 1;
+    }
+
+    .parents-amp {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      color: var(--text-mid);
+      font-style: italic;
+    }
+
+    .parents-child-line {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      color: var(--text-dark);
+      line-height: 2;
+      margin-top: 12px;
+    }
+
+    .child-name-inline {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.6em;
+      color: var(--pink-deep);
+    }
+
+    /* ── SECTION LABELS ────────────────────────── */
+    .section-label {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2.4rem;
+      color: var(--pink-deep);
+      margin-bottom: 8px;
+    }
+
+    .section-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      color: var(--text-mid);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 32px;
+    }
+
+    /* ── EVENT DETAILS ─────────────────────────── */
+    .details-section { text-align: center; }
+
+    .details-card {
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(194, 24, 91, 0.15);
+      border-radius: 24px;
+      padding: 48px 32px;
+      box-shadow: 0 8px 40px rgba(194, 24, 91, 0.1);
+      margin-top: 24px;
+    }
+
+    .details-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 32px;
+      margin-top: 32px;
+    }
+
+    .detail-item { text-align: center; }
+
+    .detail-icon {
+      font-size: 2.4rem;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .detail-label {
+      font-size: 0.7rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--pink-mid);
+      margin-bottom: 6px;
+    }
+
+    .detail-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      line-height: 1.4;
+    }
+
+    .detail-value small {
+      display: block;
+      font-size: 0.85em;
+      font-weight: 400;
+      color: var(--text-mid);
+    }
+
+    /* ── BIBLE QUOTES CAROUSEL ─────────────────── */
+    .quotes-section { text-align: center; }
+
+    .quote-carousel {
+      position: relative;
+      margin-top: 24px;
+      min-height: 180px;
+    }
+
+    .quote-slide {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+      pointer-events: none;
+    }
+
+    .quote-slide.active {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+      position: relative;
+    }
+
+    .quote-card {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(194, 24, 91, 0.12);
+      border-radius: 20px;
+      padding: 36px 32px;
+      box-shadow: 0 4px 30px rgba(194, 24, 91, 0.08);
+    }
+
+    .quote-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+      font-style: italic;
+      color: var(--text-dark);
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+
+    .quote-text::before { content: '\201C'; }
+    .quote-text::after  { content: '\201D'; }
+
+    .quote-ref {
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--pink-deep);
+      font-weight: 600;
+    }
+
+    .quote-dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 20px;
+    }
+
+    .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--pink-soft);
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+      padding: 0;
+    }
+
+    .dot.active {
+      background: var(--pink-deep);
+      transform: scale(1.3);
+    }
+
+    /* ── COUNTDOWN ─────────────────────────────── */
+    .countdown-section { text-align: center; }
+
+    .countdown-grid {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-top: 24px;
+      flex-wrap: wrap;
+    }
+
+    .count-box {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(194, 24, 91, 0.15);
+      border-radius: 16px;
+      padding: 20px 28px;
+      min-width: 90px;
+      box-shadow: 0 4px 20px rgba(194, 24, 91, 0.08);
+    }
+
+    .count-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.8rem;
+      font-weight: 600;
+      color: var(--pink-deep);
+      line-height: 1;
+      display: block;
+    }
+
+    .count-label {
+      font-size: 0.65rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-mid);
+      margin-top: 4px;
+      display: block;
+    }
+
+    /* ── MESSAGE ───────────────────────────────── */
+    .message-section { text-align: center; }
+
+    .message-card {
+      background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(252, 228, 236, 0.7));
+      border: 1px solid rgba(194, 24, 91, 0.12);
+      border-radius: 24px;
+      padding: 48px 36px;
+      margin-top: 24px;
+      box-shadow: 0 8px 40px rgba(194, 24, 91, 0.1);
+    }
+
+    .message-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      color: var(--text-dark);
+      line-height: 2;
+    }
+
+    .message-name {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2rem;
+      color: var(--pink-deep);
+      margin-top: 24px;
+      display: block;
+    }
+
+    /* ── FOOTER ────────────────────────────────── */
+    footer {
+      text-align: center;
+      padding: 40px 24px;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      color: var(--text-mid);
+      font-size: 0.95rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── RSVP ──────────────────────────────────── */
+    .rsvp-section {
+      text-align: center;
+      padding: 24px 24px 0;
+    }
+
+    .rsvp-card {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(194, 24, 91, 0.2);
+      border-radius: 16px;
+      padding: 14px 20px;
+      box-shadow: 0 4px 20px rgba(194, 24, 91, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .rsvp-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--pink-soft), var(--pink-deep), var(--pink-soft));
+    }
+
+    .rsvp-form {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .rsvp-label-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.95rem;
+      color: var(--text-mid);
+      font-style: italic;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .rsvp-input {
+      flex: 1;
+      min-width: 140px;
+      max-width: 220px;
+      padding: 8px 12px;
+      border: 1.5px solid rgba(194, 24, 91, 0.25);
+      border-radius: 8px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.95rem;
+      color: var(--text-dark);
+      background: rgba(255, 255, 255, 0.9);
+      outline: none;
+      transition: border-color 0.25s;
+    }
+
+    .rsvp-input:focus { border-color: var(--pink-deep); }
+    .rsvp-input::placeholder { color: #c49aad; }
+
+    .rsvp-toggle {
+      display: flex;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .rsvp-toggle label {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 7px 12px;
+      border: 1.5px solid rgba(194, 24, 91, 0.25);
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.82rem;
+      color: var(--text-mid);
+      transition: all 0.2s;
+      user-select: none;
+      white-space: nowrap;
+    }
+
+    .rsvp-toggle input[type="radio"] { display: none; }
+
+    .rsvp-toggle input[type="radio"]:checked + span { color: var(--pink-deep); font-weight: 700; }
+
+    .rsvp-toggle label:has(input:checked) {
+      background: var(--pink-pale);
+      border-color: var(--pink-deep);
+    }
+
+    .rsvp-btn {
+      padding: 8px 18px;
+      background: linear-gradient(135deg, var(--pink-deep), var(--pink-mid));
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .rsvp-btn:hover { opacity: 0.88; transform: translateY(-1px); }
+    .rsvp-btn:active { transform: translateY(0); }
+    .rsvp-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+    .rsvp-status {
+      width: 100%;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.9rem;
+      padding: 8px 12px;
+      border-radius: 8px;
+      display: none;
+      margin-top: 4px;
+    }
+
+    .rsvp-status.success {
+      background: #fce4ec;
+      color: var(--pink-deep);
+      border: 1px solid rgba(194, 24, 91, 0.2);
+      display: block;
+    }
+
+    .rsvp-status.error {
+      background: #fff3cd;
+      color: #856404;
+      border: 1px solid #ffc10740;
+      display: block;
+    }
+
+    /* ── ANIMATIONS ────────────────────────────── */
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    /* ── SCROLL REVEAL ─────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── RESPONSIVE ────────────────────────────── */
+    @media (max-width: 480px) {
+      .details-grid { grid-template-columns: 1fr 1fr; gap: 20px; }
+      .details-card { padding: 32px 20px; }
+      .parents-card { padding: 36px 20px; }
+      .parents-names { gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+<canvas id="bg-canvas"></canvas>
+
+<div class="page">
+
+  <!-- RSVP -->
+  <section class="rsvp-section">
+    <div class="rsvp-card">
+      <form class="rsvp-form" id="rsvp-form" novalidate>
+        <span class="rsvp-label-text">Will you join us? 🌸</span>
+        <input
+          class="rsvp-input"
+          id="rsvp-name"
+          type="text"
+          placeholder="Your name"
+          autocomplete="name"
+          required
+        />
+        <div class="rsvp-toggle">
+          <label>
+            <input type="radio" name="attendance" value="coming" id="rsvp-coming" required />
+            <span>✅ Coming</span>
+          </label>
+          <label>
+            <input type="radio" name="attendance" value="not_coming" id="rsvp-notcoming" />
+            <span>❌ Can't make it</span>
+          </label>
+        </div>
+        <button class="rsvp-btn" type="submit" id="rsvp-btn">RSVP</button>
+        <div class="rsvp-status" id="rsvp-status"></div>
+      </form>
+    </div>
+  </section>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge">With Joy &amp; Gratitude, We Invite You</div>
+    <h1 class="hero-title">Hope's Baptism</h1>
+    <p class="hero-subtitle">Celebrating New Life in Christ</p>
+
+    <div class="cross-divider">
+      <span class="cross-icon">✝</span>
+    </div>
+
+    <blockquote class="hero-verse">
+      I have called you by name; you are mine.
+      <cite>— Isaiah 43:1</cite>
+    </blockquote>
+  </section>
+
+  <!-- PARENTS INVITATION -->
+  <section class="parents-section reveal">
+    <div class="section-label">With Joyful Hearts</div>
+    <div class="section-sub">Invitation from the Parents</div>
+
+    <div class="parents-card">
+      <div class="parents-names">
+        <span class="parent-name">Cheriyan</span>
+        <span class="parents-amp">&amp;</span>
+        <span class="parent-name">Saniya</span>
+      </div>
+
+      <div class="cross-divider" style="margin: 20px auto;"><span class="cross-icon" style="font-size:1.2rem;">✝</span></div>
+
+      <p class="parents-intro">
+        By the grace of our Lord Jesus Christ,<br />
+        we joyfully request the honour of your presence<br />
+        at the Holy Baptism of our beloved daughter<br />
+        <span class="child-name-inline">Hope</span>
+      </p>
+
+      <p style="font-family:'Cormorant Garamond',serif; font-style:italic; color:var(--text-mid); margin-top:20px; font-size:1rem; line-height:1.8;">
+        Your presence, blessings, and prayers on this sacred day<br />mean the world to us.
+      </p>
+    </div>
+  </section>
+
+  <!-- EVENT DETAILS -->
+  <section class="details-section reveal">
+    <div class="section-label">The Celebration</div>
+    <div class="section-sub">You Are Invited</div>
+
+    <div class="details-card">
+      <div class="cross-divider" style="margin:0 auto 0;"><span class="cross-icon">✝</span></div>
+
+      <div class="details-grid">
+        <div class="detail-item">
+          <span class="detail-icon">🗓️</span>
+          <div class="detail-label">Date</div>
+          <div class="detail-value">
+            Saturday<br />
+            <small>20th June 2026</small>
+          </div>
+        </div>
+
+        <div class="detail-item">
+          <span class="detail-icon">⏰</span>
+          <div class="detail-label">Time</div>
+          <div class="detail-value">
+            11:30 AM
+            <small>Morning Service</small>
+          </div>
+        </div>
+
+        <div class="detail-item">
+          <span class="detail-icon">🕍</span>
+          <div class="detail-label">Venue</div>
+          <div class="detail-value">
+            St Thomas Marthoma Church
+            <small>Nilambur</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COUNTDOWN -->
+  <section class="countdown-section reveal">
+    <div class="section-label">Counting Down</div>
+    <div class="section-sub">Days Until The Blessing</div>
+
+    <div class="countdown-grid">
+      <div class="count-box">
+        <span class="count-number" id="cd-days">—</span>
+        <span class="count-label">Days</span>
+      </div>
+      <div class="count-box">
+        <span class="count-number" id="cd-hours">—</span>
+        <span class="count-label">Hours</span>
+      </div>
+      <div class="count-box">
+        <span class="count-number" id="cd-mins">—</span>
+        <span class="count-label">Minutes</span>
+      </div>
+      <div class="count-box">
+        <span class="count-number" id="cd-secs">—</span>
+        <span class="count-label">Seconds</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- BIBLE QUOTES -->
+  <section class="quotes-section reveal">
+    <div class="section-label">Words of Grace</div>
+    <div class="section-sub">Scripture Blessings</div>
+
+    <div class="quote-carousel" id="quote-carousel"></div>
+    <div class="quote-dots" id="quote-dots"></div>
+  </section>
+
+  <footer>
+    <div class="cross-divider" style="max-width:300px; margin:0 auto 16px;"><span class="cross-icon" style="font-size:1.2rem;">✝</span></div>
+    "Train up a child in the way he should go; even when he is old he will not depart from it." — Proverbs 22:6
+  </footer>
+
+</div><!-- .page -->
+
+<script>
+// ── RSVP ──────────────────────────────────────────────────────────────────
+(function initRsvp() {
+  var form   = document.getElementById('rsvp-form');
+  var btn    = document.getElementById('rsvp-btn');
+  var status = document.getElementById('rsvp-status');
+
+  var RSVP_ENDPOINT = '/.netlify/functions/rsvp';
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    var name = document.getElementById('rsvp-name').value.trim();
+    var attendance = form.querySelector('input[name="attendance"]:checked');
+
+    status.className = 'rsvp-status';
+    status.textContent = '';
+
+    if (!name) {
+      status.className = 'rsvp-status error';
+      status.textContent = 'Please enter your name.';
+      return;
+    }
+    if (!attendance) {
+      status.className = 'rsvp-status error';
+      status.textContent = 'Please select coming or not coming.';
+      return;
+    }
+
+    var attendanceLabel = attendance.value === 'coming'
+      ? '✅ Coming'
+      : '❌ Cannot make it';
+
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+
+    fetch(RSVP_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: name, attendance: attendance.value })
+    })
+    .then(function(res) { return res.json(); })
+    .then(function(data) {
+      if (data.ok) {
+        status.className = 'rsvp-status success';
+        status.textContent = attendance.value === 'coming'
+          ? '🌸 Thank you, ' + name + '! We look forward to celebrating with you.'
+          : '💕 Thank you, ' + name + '. We will miss you and cherish your prayers.';
+        form.reset();
+      } else {
+        throw new Error(data.description || 'Telegram error');
+      }
+    })
+    .catch(function() {
+      status.className = 'rsvp-status error';
+      status.textContent = 'Could not send RSVP. Please try again or contact us directly.';
+    })
+    .finally(function() {
+      btn.disabled = false;
+      btn.textContent = 'Send RSVP';
+    });
+  });
+})();
+
+// ── BIBLE QUOTES ──────────────────────────────────────────────────────────
+const QUOTES = [
+  {
+    text: "Go therefore and make disciples of all nations, baptizing them in the name of the Father and of the Son and of the Holy Spirit.",
+    ref: "Matthew 28:19"
+  },
+  {
+    text: "Whoever believes and is baptized will be saved, but whoever does not believe will be condemned.",
+    ref: "Mark 16:16"
+  },
+  {
+    text: "We were therefore buried with him through baptism into death in order that, just as Christ was raised from the dead through the glory of the Father, we too may live a new life.",
+    ref: "Romans 6:4"
+  },
+  {
+    text: "For all of you who were baptized into Christ have clothed yourselves with Christ.",
+    ref: "Galatians 3:27"
+  },
+  {
+    text: "Before I formed you in the womb I knew you, before you were born I set you apart.",
+    ref: "Jeremiah 1:5"
+  },
+  {
+    text: "Children are a gift from the Lord; they are a reward from him.",
+    ref: "Psalm 127:3"
+  },
+  {
+    text: "Let the little children come to me, and do not hinder them, for the kingdom of God belongs to such as these.",
+    ref: "Mark 10:14"
+  }
+];
+
+// ── QUOTE CAROUSEL ────────────────────────────────────────────────────────
+(function initCarousel() {
+  const carousel = document.getElementById('quote-carousel');
+  const dotsEl   = document.getElementById('quote-dots');
+  let current = 0;
+  let timer;
+
+  QUOTES.forEach(function(q, i) {
+    const slide = document.createElement('div');
+    slide.className = 'quote-slide' + (i === 0 ? ' active' : '');
+    slide.innerHTML =
+      '<div class="quote-card">' +
+        '<p class="quote-text">' + q.text + '</p>' +
+        '<div class="quote-ref">' + q.ref + '</div>' +
+      '</div>';
+    carousel.appendChild(slide);
+
+    const dot = document.createElement('button');
+    dot.className = 'dot' + (i === 0 ? ' active' : '');
+    dot.setAttribute('aria-label', 'Quote ' + (i + 1));
+    dot.addEventListener('click', function() { goTo(i); resetTimer(); });
+    dotsEl.appendChild(dot);
+  });
+
+  function goTo(idx) {
+    const slides = carousel.querySelectorAll('.quote-slide');
+    const dots   = dotsEl.querySelectorAll('.dot');
+    slides[current].classList.remove('active');
+    dots[current].classList.remove('active');
+    current = idx;
+    slides[current].classList.add('active');
+    dots[current].classList.add('active');
+  }
+
+  function next() { goTo((current + 1) % QUOTES.length); }
+
+  function resetTimer() { clearInterval(timer); timer = setInterval(next, 5000); }
+  resetTimer();
+})();
+
+// ── COUNTDOWN ─────────────────────────────────────────────────────────────
+(function initCountdown() {
+  var target = new Date('2026-06-20T11:30:00');
+
+  function update() {
+    var now  = new Date();
+    var diff = target - now;
+
+    if (diff <= 0) {
+      document.getElementById('cd-days').textContent  = '00';
+      document.getElementById('cd-hours').textContent = '00';
+      document.getElementById('cd-mins').textContent  = '00';
+      document.getElementById('cd-secs').textContent  = '00';
+      return;
+    }
+
+    var d = Math.floor(diff / 86400000);
+    var h = Math.floor((diff % 86400000) / 3600000);
+    var m = Math.floor((diff % 3600000)  / 60000);
+    var s = Math.floor((diff % 60000)    / 1000);
+
+    document.getElementById('cd-days').textContent  = String(d).padStart(2, '0');
+    document.getElementById('cd-hours').textContent = String(h).padStart(2, '0');
+    document.getElementById('cd-mins').textContent  = String(m).padStart(2, '0');
+    document.getElementById('cd-secs').textContent  = String(s).padStart(2, '0');
+  }
+
+  update();
+  setInterval(update, 1000);
+})();
+
+// ── SCROLL REVEAL ─────────────────────────────────────────────────────────
+(function initReveal() {
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal').forEach(function(el) { obs.observe(el); });
+})();
+
+// ── CANVAS ANIMATIONS (hearts, snow, clouds, sparkles) ───────────────────
+(function initCanvas() {
+  var canvas = document.getElementById('bg-canvas');
+  var ctx    = canvas.getContext('2d');
+  var W, H;
+  var particles = [];
+
+  var PINK_SHADES = ['#f8bbd0','#f48fb1','#f06292','#ec407a','#e91e8c','#fce4ec'];
+
+  function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+
+  function rand(min, max) { return min + Math.random() * (max - min); }
+
+  function makeHeart() {
+    return {
+      type: 'heart',
+      x: rand(0, W),
+      y: H + 40,
+      size: rand(10, 30),
+      speed: rand(0.4, 1.0),
+      drift: rand(-0.5, 0.5),
+      alpha: rand(0.4, 0.9),
+      color: PINK_SHADES[Math.floor(rand(0, PINK_SHADES.length))]
+    };
+  }
+
+  function makeSnow() {
+    return {
+      type: 'snow',
+      x: rand(0, W),
+      y: -10,
+      size: rand(2, 7),
+      speed: rand(0.5, 1.5),
+      drift: rand(-0.4, 0.4),
+      alpha: rand(0.5, 0.9),
+      wobble: rand(0, Math.PI * 2),
+      wobbleSpeed: rand(0.02, 0.05)
+    };
+  }
+
+  function makeCloud() {
+    return {
+      type: 'cloud',
+      x: -300,
+      y: rand(40, H * 0.35),
+      scale: rand(0.6, 1.4),
+      speed: rand(0.15, 0.4),
+      alpha: rand(0.06, 0.18)
+    };
+  }
+
+  function makeSparkle() {
+    return {
+      type: 'sparkle',
+      x: rand(0, W),
+      y: rand(0, H),
+      size: rand(1, 4),
+      alpha: 0,
+      maxAlpha: rand(0.3, 0.7),
+      phase: rand(0, Math.PI * 2),
+      speed: rand(0.02, 0.05)
+    };
+  }
+
+  function seed() {
+    particles = [];
+    for (var i = 0; i < 30; i++) { var h = makeHeart(); h.y = rand(0, H); particles.push(h); }
+    for (var j = 0; j < 60; j++) { var s = makeSnow();  s.y = rand(0, H); particles.push(s); }
+    for (var k = 0; k < 5;  k++) { var c = makeCloud(); c.x = rand(-300, W); particles.push(c); }
+    for (var l = 0; l < 40; l++) { particles.push(makeSparkle()); }
+  }
+
+  function drawHeart(x, y, size, color, alpha) {
+    ctx.save();
+    ctx.globalAlpha = alpha;
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    var s = size / 2;
+    ctx.moveTo(x, y + s * 0.35);
+    ctx.bezierCurveTo(x, y - s * 0.35, x - s, y - s * 0.35, x - s, y + s * 0.15);
+    ctx.bezierCurveTo(x - s, y + s * 0.6,  x, y + s, x, y + s);
+    ctx.bezierCurveTo(x, y + s, x + s, y + s * 0.6,  x + s, y + s * 0.15);
+    ctx.bezierCurveTo(x + s, y - s * 0.35, x, y - s * 0.35, x, y + s * 0.35);
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function drawCloud(x, y, scale, alpha) {
+    ctx.save();
+    ctx.globalAlpha = alpha;
+    ctx.fillStyle = '#ffffff';
+    var puffs = [
+      [x, y, 60 * scale],
+      [x - 55 * scale, y + 10 * scale, 45 * scale],
+      [x + 55 * scale, y + 10 * scale, 45 * scale],
+      [x - 25 * scale, y - 20 * scale, 40 * scale],
+      [x + 25 * scale, y - 20 * scale, 38 * scale]
+    ];
+    puffs.forEach(function(p) {
+      ctx.beginPath();
+      ctx.arc(p[0], p[1], p[2], 0, Math.PI * 2);
+      ctx.fill();
+    });
+    ctx.restore();
+  }
+
+  function drawSnow(x, y, size, alpha) {
+    ctx.save();
+    ctx.globalAlpha = alpha;
+    ctx.fillStyle = '#ffffff';
+    ctx.beginPath();
+    ctx.arc(x, y, size, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function drawSparkle(x, y, size, alpha) {
+    ctx.save();
+    ctx.globalAlpha = alpha;
+    ctx.strokeStyle = '#f06292';
+    ctx.lineWidth = 1;
+    for (var i = 0; i < 4; i++) {
+      var angle = (i / 4) * Math.PI * 2;
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.lineTo(x + Math.cos(angle) * size * 3, y + Math.sin(angle) * size * 3);
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  function tick() {
+    ctx.clearRect(0, 0, W, H);
+
+    for (var i = 0; i < particles.length; i++) {
+      var p = particles[i];
+
+      if (p.type === 'heart') {
+        p.y -= p.speed;
+        p.x += p.drift;
+        drawHeart(p.x, p.y, p.size, p.color, p.alpha);
+        if (p.y < -p.size * 2) particles[i] = makeHeart();
+      }
+
+      if (p.type === 'snow') {
+        p.wobble += p.wobbleSpeed;
+        p.y += p.speed;
+        p.x += p.drift + Math.sin(p.wobble) * 0.3;
+        drawSnow(p.x, p.y, p.size, p.alpha);
+        if (p.y > H + 10) particles[i] = makeSnow();
+      }
+
+      if (p.type === 'cloud') {
+        p.x += p.speed;
+        drawCloud(p.x, p.y, p.scale, p.alpha);
+        if (p.x > W + 400) { var nc = makeCloud(); nc.x = -300; particles[i] = nc; }
+      }
+
+      if (p.type === 'sparkle') {
+        p.phase += p.speed;
+        p.alpha = p.maxAlpha * Math.abs(Math.sin(p.phase));
+        drawSparkle(p.x, p.y, p.size, p.alpha);
+      }
+    }
+
+    requestAnimationFrame(tick);
+  }
+
+  window.addEventListener('resize', function() { resize(); seed(); });
+  resize();
+  seed();
+  tick();
+})();
+</script>
+</body>
+</html>
